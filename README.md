@@ -25,8 +25,33 @@ Once installed, you can manage your Purelymail email infrastructure in plain lan
 The agent handles the API calls. You describe the outcome.
 
 <p align="center">
-  <img src="assets/diagram.png" alt="How it works" width="100%">
+  <img src="assets/diagram.png" alt="How it works — Claude Code orchestrates mcp-server-cloudflare and mcp-server-purelymail together" width="100%">
 </p>
+
+---
+
+## Works great with mcp-server-cloudflare
+
+Pair this server with the official [**mcp-server-cloudflare**](https://github.com/cloudflare/mcp-server-cloudflare) to let your agent handle the entire email setup end-to-end — DNS records and mailboxes — without you touching a single config panel.
+
+**Install both:**
+
+```bash
+# Cloudflare MCP (official)
+claude mcp add cloudflare --scope user -- npx mcp-server-cloudflare
+
+# Purelymail MCP (this server)
+claude mcp add purelymail \
+  --scope user \
+  -e PURELYMAIL_API_TOKEN=your-token-here \
+  -- npx mcp-server-purelymail
+```
+
+**Then just ask:**
+
+> _"I own acme.com on Cloudflare. Set up professional email for it on Purelymail."_
+
+The agent will: verify domain ownership → add MX, SPF, DKIM, and DMARC records to Cloudflare → register the domain on Purelymail → create your first mailbox. Done in minutes, zero copy-paste.
 
 ---
 
