@@ -1,6 +1,6 @@
 {
   "name": "purelymail-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for the Purelymail API — manage domains, mailboxes, and routing rules from Claude Code",
   "type": "module",
   "bin": {
