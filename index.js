@@ -165,6 +165,27 @@ server.registerTool("delete_routing_rule", {
   return ok(await call("deleteRoutingRule", args));
 });
 
+server.registerTool("get_required_dns_records", {
+  description: "Returns the exact DNS records needed to configure a domain with Purelymail — ownership proof, MX, SPF, DKIM, and DMARC. Call this before adding records to any DNS provider to get the correct values.",
+  inputSchema: {
+    domainName: z.string().describe("The domain you are configuring, e.g. 'example.com'"),
+  },
+}, async ({ domainName }) => {
+  const res = await call("getOwnershipCode");
+  if (res.type !== "success") return ok(res);
+  return ok({
+    ownership: { type: "TXT", host: domainName, value: res.result.code },
+    mx: { type: "MX", host: domainName, value: "mailserver.purelymail.com", priority: 50 },
+    spf: { type: "TXT", host: domainName, value: "v=spf1 include:_spf.purelymail.com ~all" },
+    dkim: [
+      { type: "CNAME", host: `purelymail1._domainkey.${domainName}`, value: "key1.dkimroot.purelymail.com." },
+      { type: "CNAME", host: `purelymail2._domainkey.${domainName}`, value: "key2.dkimroot.purelymail.com." },
+      { type: "CNAME", host: `purelymail3._domainkey.${domainName}`, value: "key3.dkimroot.purelymail.com." },
+    ],
+    dmarc: { type: "CNAME", host: `_dmarc.${domainName}`, value: "dmarcroot.purelymail.com." },
+  });
+});
+
 server.registerTool("check_deliverability", {
   description: "Run live DNS deliverability checks for a domain — MX, SPF, DKIM (all 3 Purelymail keys), and DMARC. Returns a scored report with issues and recommendations.",
   inputSchema: {
@@ -179,11 +200,10 @@ server.registerTool("check_deliverability", {
   try {
     const mx = await dns.resolveMx(domainName);
     const sorted = mx.sort((a, b) => a.priority - b.priority);
-    const hasPurelymail = sorted.some(r => r.exchange.includes("purelymail.com"));
-    checks.mx = { pass: true, records: sorted };
-    if (!hasPurelymail) {
-      issues.push("MX records do not point to purelymail.com — mail will not be delivered to Purelymail");
-      checks.mx.pass = false;
+    const hasCorrectMx = sorted.some(r => r.exchange === "mailserver.purelymail.com");
+    checks.mx = { pass: hasCorrectMx, records: sorted };
+    if (!hasCorrectMx) {
+      issues.push("MX record must point to mailserver.purelymail.com (priority 50) — run get_required_dns_records for exact values");
     }
   } catch {
     checks.mx = { pass: false, error: "No MX records found" };
@@ -204,8 +224,9 @@ server.registerTool("check_deliverability", {
       } else if (allMechanism === "~") {
         recommendations.push("SPF uses ~all (softfail) — upgrade to -all for stricter enforcement and better deliverability");
       }
-      if (!spfRecord.includes("purelymail.com") && !spfRecord.includes("include:")) {
-        issues.push("SPF record may not authorize Purelymail servers — ensure 'include:purelymail.com' or equivalent is present");
+      if (!spfRecord.includes("include:_spf.purelymail.com")) {
+        issues.push("SPF record must include '_spf.purelymail.com' — run get_required_dns_records for exact values");
+        checks.spf.pass = false;
       }
     } else {
       checks.spf = { pass: false, error: "No SPF record found" };
@@ -216,8 +237,8 @@ server.registerTool("check_deliverability", {
     issues.push("SPF TXT lookup failed");
   }
 
-  // DKIM — Purelymail uses 3 keys: key1, key2, key3
-  const dkimKeys = ["key1", "key2", "key3"];
+  // DKIM — Purelymail uses selectors purelymail1, purelymail2, purelymail3
+  const dkimKeys = ["purelymail1", "purelymail2", "purelymail3"];
   const dkimResults = [];
   for (const key of dkimKeys) {
     const selector = `${key}._domainkey.${domainName}`;
