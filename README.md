@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/mcp-server-purelymail"><img src="https://img.shields.io/npm/v/mcp-server-purelymail?style=flat-square" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/purelymail-mcp"><img src="https://img.shields.io/npm/v/purelymail-mcp?style=flat-square" alt="npm version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/MCP-Compatible-7c3aed?style=flat-square" alt="MCP Compatible">
   <img src="https://img.shields.io/badge/node-%3E%3D18-brightgreen?style=flat-square" alt="Node ≥18">
@@ -44,7 +44,7 @@ claude mcp add cloudflare --scope user -- npx mcp-server-cloudflare
 claude mcp add purelymail \
   --scope user \
   -e PURELYMAIL_API_TOKEN=your-token-here \
-  -- npx mcp-server-purelymail
+  -- npx purelymail-mcp
 ```
 
 **Then just ask:**
@@ -71,7 +71,7 @@ The agent will: verify domain ownership → add MX, SPF, DKIM, and DMARC records
 claude mcp add purelymail \
   --scope user \
   -e PURELYMAIL_API_TOKEN=your-token-here \
-  -- npx mcp-server-purelymail
+  -- npx purelymail-mcp
 ```
 
 Replace `your-token-here` with your token from [purelymail.com/manage/account](https://purelymail.com/manage/account).
