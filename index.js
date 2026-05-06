@@ -2,7 +2,11 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import dns from "node:dns/promises";
+import { Resolver } from "node:dns/promises";
+
+// Use public resolvers so results reflect global DNS state, not the local cache
+const dns = new Resolver();
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const API_TOKEN = process.env.PURELYMAIL_API_TOKEN;
 
