@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>How it works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    width: 1280px;
+    height: 280px;
+    overflow: hidden;
+    background: #0d0d12;
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* top fade */
+  body::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139,92,246,0.5), transparent);
+  }
+
+  .label {
+    position: relative;
+    z-index: 1;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .flow {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .node-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    border: 1px solid;
+    position: relative;
+  }
+
+  .node-icon-claude {
+    background: rgba(255,162,0,0.08);
+    border-color: rgba(255,162,0,0.2);
+  }
+
+  .node-icon-mcp {
+    background: rgba(139,92,246,0.12);
+    border-color: rgba(139,92,246,0.35);
+    box-shadow: 0 0 30px rgba(139,92,246,0.15);
+  }
+
+  .node-icon-pm {
+    background: rgba(59,130,246,0.08);
+    border-color: rgba(59,130,246,0.2);
+  }
+
+  .node-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    white-space: nowrap;
+  }
+
+  .node-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    white-space: nowrap;
+  }
+
+  /* arrow connector */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0 16px;
+    margin-bottom: 34px;
+  }
+
+  .connector-line {
+    width: 120px;
+    height: 1px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .connector-line::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(139,92,246,0.5), rgba(255,255,255,0.08));
+  }
+
+  /* arrowhead */
+  .connector-line::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 0;
+    height: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 6px solid rgba(139,92,246,0.5);
+  }
+
+  .connector-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.2);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* tools preview column */
+  .tools-list {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 1;
+  }
+
+  .tool-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.3);
+    white-space: nowrap;
+  }
+
+  .tool-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-domain { background: #8b5cf6; }
+  .dot-user   { background: #3b82f6; }
+  .dot-route  { background: #22c55e; }
+
+  /* natural language prompt */
+  .prompt-bubble {
+    position: absolute;
+    left: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,162,0,0.06);
+    border: 1px solid rgba(255,162,0,0.15);
+    border-radius: 12px;
+    padding: 10px 14px;
+    max-width: 200px;
+    z-index: 1;
+  }
+
+  .prompt-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .prompt-attribution {
+    margin-top: 6px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,162,0,0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="label">How it works</div>
+
+  <!-- left: natural language prompt -->
+  <div class="prompt-bubble">
+    <div class="prompt-text">"Add email for mysite.com and set up the DNS in Cloudflare"</div>
+    <div class="prompt-attribution">You, in chat</div>
+  </div>
+
+  <!-- centre: flow -->
+  <div class="flow">
+    <div class="node">
+      <div class="node-icon node-icon-claude">🤖</div>
+      <div class="node-title">Claude Code</div>
+      <div class="node-sub">AI Agent</div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">MCP stdio</div>
+    </div>
+
+    <div class="node">
+      <div class="node-icon node-icon-mcp">⬡</div>
+      <div class="node-title">mcp-server-purelymail</div>
+      <div class="node-sub">npx mcp-server-purelymail</div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">HTTPS API</div>
+    </div>
+
+    <div class="node">
+      <div class="node-icon node-icon-pm">✉️</div>
+      <div class="node-title">Purelymail</div>
+      <div class="node-sub">purelymail.com/api/v0</div>
+    </div>
+  </div>
+
+  <!-- right: tool list -->
+  <div class="tools-list">
+    <div class="tool-pill"><span class="tool-dot dot-domain"></span>list_domains</div>
+    <div class="tool-pill"><span class="tool-dot dot-domain"></span>add_domain</div>
+    <div class="tool-pill"><span class="tool-dot dot-user"></span>create_user</div>
+    <div class="tool-pill"><span class="tool-dot dot-user"></span>list_users</div>
+    <div class="tool-pill"><span class="tool-dot dot-route"></span>create_routing_rule</div>
+  </div>
+</body>
+</html>

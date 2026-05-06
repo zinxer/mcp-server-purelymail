@@ -1,19 +1,21 @@
-# mcp-server-purelymail
+<p align="center">
+  <img src="assets/hero.png" alt="mcp-server-purelymail" width="100%">
+</p>
 
-> Community MCP server for [Purelymail](https://purelymail.com) — manage email domains, mailboxes, and routing rules from Claude Code and other MCP-compatible AI agents.
+<p align="center">
+  <a href="https://www.npmjs.com/package/mcp-server-purelymail"><img src="https://img.shields.io/npm/v/mcp-server-purelymail?style=flat-square" alt="npm version"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/MCP-Compatible-7c3aed?style=flat-square" alt="MCP Compatible">
+  <img src="https://img.shields.io/badge/node-%3E%3D18-brightgreen?style=flat-square" alt="Node ≥18">
+</p>
 
-[![npm version](https://img.shields.io/npm/v/mcp-server-purelymail?style=flat-square)](https://www.npmjs.com/package/mcp-server-purelymail)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue?style=flat-square)](https://modelcontextprotocol.io)
-[![Node ≥18](https://img.shields.io/badge/node-%3E%3D18-brightgreen?style=flat-square)](https://nodejs.org)
-
-> **Disclaimer:** This is an **unofficial, community-built** MCP server. It is not affiliated with, endorsed by, or supported by Purelymail. Use at your own risk.
+> **Disclaimer:** This is an **unofficial, community-built** MCP server. It is not affiliated with, endorsed by, or supported by Purelymail.
 
 ---
 
 ## What it does
 
-Once installed, you can talk to your email infrastructure in plain language:
+Once installed, you can manage your Purelymail email infrastructure in plain language:
 
 - _"Add email for mycompany.com and set up all the DNS records"_
 - _"Create a mailbox for hello@mycompany.com with a strong password"_
@@ -21,6 +23,10 @@ Once installed, you can talk to your email infrastructure in plain language:
 - _"Show me the DNS status for all my domains"_
 
 The agent handles the API calls. You describe the outcome.
+
+<p align="center">
+  <img src="assets/diagram.png" alt="How it works" width="100%">
+</p>
 
 ---
 
@@ -64,7 +70,7 @@ claude mcp add purelymail \
 
 ### Other MCP clients
 
-Add to your MCP client's config:
+Add to your MCP client's server config:
 
 ```json
 {
@@ -120,7 +126,7 @@ Add to your MCP client's config:
 The agent will:
 
 1. Call `get_ownership_code` → gets the exact TXT record value from the Purelymail API
-2. Add TXT (ownership), MX, SPF, DKIM (×3), and DMARC records to Cloudflare
+2. Add TXT (ownership), MX, SPF, DKIM ×3, and DMARC records to Cloudflare
 3. Call `add_domain` → registers `acme.com` once DNS passes
 
 No copy-pasting. No looking up record values. No manual DNS entry.
@@ -131,7 +137,7 @@ No copy-pasting. No looking up record values. No manual DNS entry.
 
 - Your API token is **never stored in source code** — it is passed via environment variable only
 - The server runs locally on your machine; no data is proxied through any third party
-- Treat your `PURELYMAIL_API_TOKEN` like a password — do not share it or commit it to version control
+- Treat your `PURELYMAIL_API_TOKEN` like a password — do not commit it to version control
 
 ---
 
@@ -158,6 +164,6 @@ MIT — see [LICENSE](LICENSE) for details.
 
 ## Disclaimer
 
-**Purelymail** is a trademark of its respective owners. This project is independently developed by the community and is **not affiliated with, endorsed by, or supported by Purelymail**. The Purelymail name and logo are used solely to describe compatibility with the Purelymail service.
+This project was built by [Matthew Prag](https://github.com/zinxer) as an open-source community tool. **Purelymail** is a trademark of its respective owners. This project is independently developed and is **not affiliated with, endorsed by, or supported by Purelymail**. The Purelymail name is used solely to describe compatibility with the Purelymail service.
 
 For official Purelymail support, visit [purelymail.com](https://purelymail.com).

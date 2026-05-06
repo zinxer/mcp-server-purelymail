@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    width: 1280px;
+    height: 400px;
+    overflow: hidden;
+    background: #0d0d12;
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* subtle grid */
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* left glow */
+  .glow-left {
+    position: absolute;
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(139,92,246,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* right glow */
+  .glow-right {
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .eyebrow-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #8b5cf6;
+    box-shadow: 0 0 8px #8b5cf6;
+  }
+
+  .title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 42px;
+    font-weight: 500;
+    color: #f1f5f9;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .title .prefix { color: rgba(255,255,255,0.3); }
+  .title .name { color: #f1f5f9; }
+  .title .accent { color: #8b5cf6; }
+
+  .tagline {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+    max-width: 540px;
+    line-height: 1.5;
+  }
+
+  .install-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px 20px;
+  }
+
+  .install-prompt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #8b5cf6;
+    user-select: none;
+  }
+
+  .install-cmd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .badges {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .badge-mcp {
+    background: rgba(139,92,246,0.12);
+    border-color: rgba(139,92,246,0.3);
+    color: #a78bfa;
+  }
+
+  .badge-community {
+    background: rgba(59,130,246,0.10);
+    border-color: rgba(59,130,246,0.25);
+    color: #7dd3fc;
+  }
+
+  .badge-mit {
+    background: rgba(34,197,94,0.10);
+    border-color: rgba(34,197,94,0.25);
+    color: #86efac;
+  }
+
+  /* flow diagram — right side */
+  .flow {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+    opacity: 0.6;
+  }
+
+  .flow-node {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    white-space: nowrap;
+  }
+
+  .flow-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .flow-line {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.1);
+    margin-left: auto;
+    margin-right: 14px;
+  }
+</style>
+</head>
+<body>
+  <div class="glow-left"></div>
+  <div class="glow-right"></div>
+
+  <div class="content">
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      Community MCP Server
+      <div class="eyebrow-dot"></div>
+    </div>
+
+    <div class="title">
+      <span class="prefix">mcp-server-</span><span class="accent">purelymail</span>
+    </div>
+
+    <div class="tagline">
+      Manage Purelymail domains, mailboxes, and routing rules<br>
+      from Claude Code and any MCP-compatible AI agent.
+    </div>
+
+    <div class="install-box">
+      <span class="install-prompt">$</span>
+      <span class="install-cmd">claude mcp add purelymail -- npx mcp-server-purelymail</span>
+    </div>
+
+    <div class="badges">
+      <div class="badge badge-mcp">⬡ MCP Compatible</div>
+      <div class="badge badge-community">◈ Community Built</div>
+      <div class="badge badge-mit">✓ MIT License</div>
+    </div>
+  </div>
+</body>
+</html>
