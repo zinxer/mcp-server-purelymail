@@ -1,0 +1,32 @@
+{
+  "name": "mcp-server-purelymail",
+  "version": "1.0.0",
+  "description": "MCP server for the Purelymail API — manage domains, mailboxes, and routing rules from Claude Code",
+  "type": "module",
+  "bin": {
+    "mcp-server-purelymail": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "mcp",
+    "purelymail",
+    "email",
+    "claude",
+    "model-context-protocol"
+  ],
+  "author": "Matthew Prag",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zinxer/mcp-server-purelymail.git"
+  }
+}
