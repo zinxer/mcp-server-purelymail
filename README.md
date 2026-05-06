@@ -115,6 +115,12 @@ Add to your MCP client's server config:
 
 ## Tools
 
+### Deliverability
+
+| Tool | Description |
+|------|-------------|
+| `check_deliverability` | Run live DNS checks for a domain — MX, SPF, DKIM (all 3 keys), DMARC — with a scored report, issues list, and recommendations |
+
 ### Domains
 
 | Tool | Description |
