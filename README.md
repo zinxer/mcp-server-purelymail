@@ -1,14 +1,40 @@
 # mcp-server-purelymail
 
-MCP server for the [Purelymail](https://purelymail.com) API. Manage email domains, mailboxes, and routing rules directly from Claude Code.
+> Community MCP server for [Purelymail](https://purelymail.com) — manage email domains, mailboxes, and routing rules from Claude Code and other MCP-compatible AI agents.
 
-## Setup
+[![npm version](https://img.shields.io/npm/v/mcp-server-purelymail?style=flat-square)](https://www.npmjs.com/package/mcp-server-purelymail)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue?style=flat-square)](https://modelcontextprotocol.io)
+[![Node ≥18](https://img.shields.io/badge/node-%3E%3D18-brightgreen?style=flat-square)](https://nodejs.org)
 
-### 1. Get your API token
+> **Disclaimer:** This is an **unofficial, community-built** MCP server. It is not affiliated with, endorsed by, or supported by Purelymail. Use at your own risk.
 
-Go to your [Purelymail account settings](https://purelymail.com/manage/account) and generate an API token.
+---
 
-### 2. Add to Claude Code
+## What it does
+
+Once installed, you can talk to your email infrastructure in plain language:
+
+- _"Add email for mycompany.com and set up all the DNS records"_
+- _"Create a mailbox for hello@mycompany.com with a strong password"_
+- _"Forward support@ to our team's inboxes"_
+- _"Show me the DNS status for all my domains"_
+
+The agent handles the API calls. You describe the outcome.
+
+---
+
+## Prerequisites
+
+- **Node.js** 18 or later
+- **Purelymail account** — [sign up at purelymail.com](https://purelymail.com)
+- **API token** — generate one at [purelymail.com/manage/account](https://purelymail.com/manage/account)
+
+---
+
+## Installation
+
+### Claude Code (recommended)
 
 ```bash
 claude mcp add purelymail \
@@ -17,47 +43,121 @@ claude mcp add purelymail \
   -- npx mcp-server-purelymail
 ```
 
-Or run from a local clone:
+Replace `your-token-here` with your token from [purelymail.com/manage/account](https://purelymail.com/manage/account).
+
+### From source
 
 ```bash
 git clone https://github.com/zinxer/mcp-server-purelymail.git
 cd mcp-server-purelymail
 npm install
+```
 
+Then register it:
+
+```bash
 claude mcp add purelymail \
   --scope user \
   -e PURELYMAIL_API_TOKEN=your-token-here \
-  -- node /path/to/mcp-server-purelymail/index.js
+  -- node /absolute/path/to/mcp-server-purelymail/index.js
 ```
 
-## Available Tools
+### Other MCP clients
+
+Add to your MCP client's config:
+
+```json
+{
+  "mcpServers": {
+    "purelymail": {
+      "command": "npx",
+      "args": ["mcp-server-purelymail"],
+      "env": {
+        "PURELYMAIL_API_TOKEN": "your-token-here"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Tools
+
+### Domains
 
 | Tool | Description |
 |------|-------------|
-| `list_domains` | List domains with DNS validation status (MX, SPF, DKIM, DMARC) |
-| `get_ownership_code` | Get the TXT record value needed to add a new domain |
-| `add_domain` | Add a verified domain to Purelymail |
-| `delete_domain` | Delete a domain and all its users |
+| `list_domains` | List all domains with DNS validation status (MX, SPF, DKIM, DMARC) |
+| `get_ownership_code` | Get the TXT record value needed to prove ownership of a new domain |
+| `add_domain` | Add a domain once DNS records are in place |
+| `delete_domain` | Delete a domain and all its associated mailboxes |
+
+### Mailboxes
+
+| Tool | Description |
+|------|-------------|
 | `create_user` | Create a new email mailbox |
-| `list_users` | List all mailboxes |
-| `get_user` | Get details for a specific user |
+| `list_users` | List all mailboxes on the account |
+| `get_user` | Get details for a specific mailbox |
 | `modify_user` | Change password, recovery email, or settings |
 | `delete_user` | Delete a mailbox |
-| `list_routing_rules` | List all routing/forwarding rules |
-| `create_routing_rule` | Forward or alias an email address |
+
+### Routing
+
+| Tool | Description |
+|------|-------------|
+| `list_routing_rules` | List all routing and forwarding rules |
+| `create_routing_rule` | Forward or alias an address to one or more inboxes |
 | `delete_routing_rule` | Remove a routing rule |
 
-## Adding a new domain (example workflow)
+---
 
-Ask Claude:
+## Example workflow
 
-> "Add email for mysite.com on Purelymail and set up the DNS records in Cloudflare"
+**Prompt:** _"Add email for acme.com on Purelymail and set up the DNS in Cloudflare"_
 
-Claude will:
-1. Call `get_ownership_code` to get the exact TXT record value
-2. Add the TXT, MX, SPF, DKIM, and DMARC records to Cloudflare
-3. Call `add_domain` once DNS is verified
+The agent will:
+
+1. Call `get_ownership_code` → gets the exact TXT record value from the Purelymail API
+2. Add TXT (ownership), MX, SPF, DKIM (×3), and DMARC records to Cloudflare
+3. Call `add_domain` → registers `acme.com` once DNS passes
+
+No copy-pasting. No looking up record values. No manual DNS entry.
+
+---
+
+## Security
+
+- Your API token is **never stored in source code** — it is passed via environment variable only
+- The server runs locally on your machine; no data is proxied through any third party
+- Treat your `PURELYMAIL_API_TOKEN` like a password — do not share it or commit it to version control
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome.
+
+```bash
+git clone https://github.com/zinxer/mcp-server-purelymail.git
+cd mcp-server-purelymail
+npm install
+PURELYMAIL_API_TOKEN=your-token node index.js
+```
+
+Please open an issue before submitting large changes.
+
+---
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
+
+---
+
+## Disclaimer
+
+**Purelymail** is a trademark of its respective owners. This project is independently developed by the community and is **not affiliated with, endorsed by, or supported by Purelymail**. The Purelymail name and logo are used solely to describe compatibility with the Purelymail service.
+
+For official Purelymail support, visit [purelymail.com](https://purelymail.com).
