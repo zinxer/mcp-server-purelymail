@@ -4,7 +4,7 @@
   "description": "MCP server for the Purelymail API — manage domains, mailboxes, and routing rules from Claude Code",
   "type": "module",
   "bin": {
-    "purelymail-mcp": "./index.js"
+    "purelymail-mcp": "index.js"
   },
   "scripts": {
     "start": "node index.js"
@@ -27,6 +27,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zinxer/mcp-server-purelymail.git"
+    "url": "git+https://github.com/zinxer/mcp-server-purelymail.git"
   }
 }
