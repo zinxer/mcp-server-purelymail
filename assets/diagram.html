@@ -10,7 +10,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     width: 1280px;
-    height: 340px;
+    height: 520px;
     overflow: hidden;
     background: #0d0d12;
     font-family: 'Inter', system-ui, sans-serif;
@@ -42,8 +42,9 @@
     z-index: 1;
     display: flex;
     align-items: center;
-    gap: 0;
-    width: 1100px;
+    justify-content: center;
+    gap: 24px;
+    width: 1240px;
   }
 
   /* ── Nodes ── */
@@ -55,8 +56,8 @@
     flex-shrink: 0;
   }
   .node-icon {
-    width: 72px; height: 72px;
-    border-radius: 18px;
+    width: 96px; height: 96px;
+    border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,21 +65,21 @@
     position: relative;
     overflow: hidden;
   }
-  .node-icon img { width: 42px; height: 42px; object-fit: contain; }
+  .node-icon img { width: 56px; height: 56px; object-fit: contain; }
   .node-icon-claude {
     background: rgba(255,255,255,0.04);
     border-color: rgba(255,255,255,0.1);
   }
-  .node-icon-claude .claude-svg { width: 44px; height: 44px; }
+  .node-icon-claude .claude-svg { width: 58px; height: 58px; }
   .node-title {
-    font-size: 12px; font-weight: 600;
+    font-size: 15px; font-weight: 600;
     color: rgba(255,255,255,0.8);
     white-space: nowrap;
     text-align: center;
   }
   .node-sub {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px; color: rgba(255,255,255,0.28);
+    font-size: 11px; color: rgba(255,255,255,0.28);
     white-space: nowrap; text-align: center;
   }
 
@@ -89,17 +90,17 @@
     justify-content: center;
     gap: 0;
     margin: 0 8px;
-    margin-bottom: 26px;
+    margin-bottom: 40px;
   }
   .fork-arm {
     display: flex;
     align-items: center;
     gap: 0;
   }
-  .fork-arm-top { padding-bottom: 16px; }
-  .fork-arm-bottom { padding-top: 16px; }
+  .fork-arm-top { padding-bottom: 36px; }
+  .fork-arm-bottom { padding-top: 36px; }
   .fork-line-h {
-    width: 72px; height: 1px;
+    width: 140px; height: 1px;
     background: linear-gradient(90deg, rgba(255,255,255,0.12), var(--line-color));
     position: relative;
   }
@@ -117,7 +118,7 @@
     margin-left: 0;
   }
   .arm-label {
-    font-size: 8.5px; font-weight: 500;
+    font-size: 11px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
     color: rgba(255,255,255,0.2);
     padding: 0 6px;
@@ -128,18 +129,18 @@
   .pair-col {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
   }
 
   /* ── Single MCP card ── */
   .mcp-card {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    border-radius: 12px;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 16px;
     border: 1px solid;
-    width: 260px;
+    width: 320px;
   }
   .mcp-card-cf {
     background: rgba(246,130,31,0.06);
@@ -151,30 +152,30 @@
     box-shadow: 0 0 20px rgba(139,92,246,0.08);
   }
   .mcp-card-logo {
-    width: 32px; height: 32px;
+    width: 44px; height: 44px;
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
   }
-  .mcp-card-logo img { width: 26px; height: 26px; object-fit: contain; }
-  .mcp-card-body { display: flex; flex-direction: column; gap: 2px; }
+  .mcp-card-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .mcp-card-body { display: flex; flex-direction: column; gap: 4px; }
   .mcp-card-name {
-    font-size: 11.5px; font-weight: 600;
+    font-size: 15px; font-weight: 600;
     color: rgba(255,255,255,0.8);
     white-space: nowrap;
   }
   .mcp-card-npm {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px; color: rgba(255,255,255,0.28);
+    font-size: 11px; color: rgba(255,255,255,0.28);
   }
 
   /* ── Arrow between MCP and service ── */
   .arrow-h {
-    width: 52px; height: 1px;
+    width: 100px; height: 1px;
     position: relative;
     flex-shrink: 0;
-    margin-bottom: 26px;
+    margin-bottom: 40px;
   }
   .arrow-h::before {
     content: '';
@@ -195,32 +196,32 @@
   .service-col {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
   }
   .service-node {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    width: 110px;
+    gap: 10px;
+    width: 140px;
   }
   .service-icon {
-    width: 48px; height: 48px;
-    border-radius: 12px;
+    width: 64px; height: 64px;
+    border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
     border: 1px solid;
     overflow: hidden;
   }
-  .service-icon img { width: 30px; height: 30px; object-fit: contain; }
+  .service-icon img { width: 42px; height: 42px; object-fit: contain; }
   .service-icon-cf { background: rgba(246,130,31,0.08); border-color: rgba(246,130,31,0.22); }
   .service-icon-pm { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.28); }
   .service-name {
-    font-size: 10.5px; font-weight: 600;
+    font-size: 14px; font-weight: 600;
     color: rgba(255,255,255,0.65);
     white-space: nowrap;
   }
   .service-role {
-    font-size: 8.5px;
+    font-size: 11px;
     color: rgba(255,255,255,0.25);
     text-align: center;
     line-height: 1.35;
@@ -229,8 +230,8 @@
 
   /* ── Outcome badge ── */
   .outcome {
-    margin-left: 32px;
-    margin-bottom: 26px;
+    margin-left: 48px;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -239,21 +240,21 @@
   .outcome-badge {
     background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.1));
     border: 1px solid rgba(139,92,246,0.3);
-    border-radius: 14px;
-    padding: 14px 20px;
+    border-radius: 16px;
+    padding: 22px 30px;
     text-align: center;
-    max-width: 170px;
+    max-width: 210px;
   }
-  .outcome-emoji { font-size: 22px; }
+  .outcome-emoji { font-size: 32px; }
   .outcome-title {
-    margin-top: 6px;
-    font-size: 12px; font-weight: 700;
+    margin-top: 8px;
+    font-size: 16px; font-weight: 700;
     color: rgba(255,255,255,0.9);
     line-height: 1.3;
   }
   .outcome-sub {
-    margin-top: 4px;
-    font-size: 9.5px;
+    margin-top: 6px;
+    font-size: 13px;
     color: rgba(255,255,255,0.35);
     line-height: 1.4;
   }
@@ -287,7 +288,7 @@
     <!-- top arm: CF -->
     <div class="fork-arm fork-arm-top">
       <div style="display:flex;flex-direction:column;align-items:flex-end">
-        <div style="width:1px;height:17px;background:rgba(255,255,255,0.06);margin-left:0"></div>
+        <div style="width:1px;height:25px;background:rgba(255,255,255,0.06);margin-left:0"></div>
         <div class="fork-line-h" style="--line-color: rgba(246,130,31,0.45)"></div>
       </div>
     </div>
@@ -295,7 +296,7 @@
     <div class="fork-arm fork-arm-bottom">
       <div style="display:flex;flex-direction:column;align-items:flex-end">
         <div class="fork-line-h" style="--line-color: rgba(139,92,246,0.5)"></div>
-        <div style="width:1px;height:17px;background:rgba(255,255,255,0.06);margin-left:0"></div>
+        <div style="width:1px;height:25px;background:rgba(255,255,255,0.06);margin-left:0"></div>
       </div>
     </div>
   </div>
@@ -326,13 +327,13 @@
 
   <!-- Arrows to services -->
   <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:26px;">
-    <div class="arrow-h" style="--arrow-color: rgba(246,130,31,0.4); margin-bottom:0; height:48px; width:52px; display:flex; align-items:center;">
-      <div style="width:52px;height:1px;background:linear-gradient(90deg,rgba(246,130,31,0.35),rgba(246,130,31,0.1));position:relative;">
+    <div class="arrow-h" style="--arrow-color: rgba(246,130,31,0.4); margin-bottom:0; height:68px; width:100px; display:flex; align-items:center;">
+      <div style="width:100px;height:1px;background:linear-gradient(90deg,rgba(246,130,31,0.35),rgba(246,130,31,0.1));position:relative;">
         <div style="position:absolute;right:-1px;top:-3px;border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;border-left:6px solid rgba(246,130,31,0.4);"></div>
       </div>
     </div>
-    <div style="height:10px;"></div>
-    <div style="width:52px;height:1px;background:linear-gradient(90deg,rgba(139,92,246,0.45),rgba(139,92,246,0.1));position:relative;margin-top:4px;">
+    <div style="height:20px;"></div>
+    <div style="width:100px;height:1px;background:linear-gradient(90deg,rgba(139,92,246,0.45),rgba(139,92,246,0.1));position:relative;margin-top:4px;">
       <div style="position:absolute;right:-1px;top:-3px;border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;border-left:6px solid rgba(139,92,246,0.5);"></div>
     </div>
   </div>
